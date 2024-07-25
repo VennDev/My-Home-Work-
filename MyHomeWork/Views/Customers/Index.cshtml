@@ -1,0 +1,185 @@
+﻿@using Newtonsoft.Json
+@model MyHomeWork.Models.Customers
+
+@{
+    ViewBag.Title = "Customers";
+}
+
+<h2>List - @ViewBag.Title</h2>
+<div id="overlay"></div>
+<div id="dialog_form" class="dialog" title="Form" style="justify-content: center; align-items: center;">
+    <div class="dialog-content">
+        @using (Html.BeginForm("Save", "Customers", FormMethod.Post, new { @class = "form-horizontal", @id = "main_form" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="IdRequest" id="id-request"/>
+            <div style="display: flex;">
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control", @id = "CustomerId", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                </div>
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName" } })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control", @id = "Company" } })
+                    @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @id = "City" } })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", @id = "Country" } })
+                    @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div style="display: flex">
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.Phone1, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.Phone1, new { htmlAttributes = new { @class = "form-control", @id = "Phone1" } })
+                    @Html.ValidationMessageFor(model => model.Phone1, "", new { @class = "text-danger" })
+                </div>
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.Phone2, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.Phone2, new { htmlAttributes = new { @class = "form-control", @id = "Phone2" } })
+                    @Html.ValidationMessageFor(model => model.Phone2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div style="display: flex">
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "Email", @type = "email" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.SubscriptionDate, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.SubscriptionDate, new { htmlAttributes = new { @class = "form-control", @id = "SubscriptionDate", @type = "datetime-local" } })
+                    @Html.ValidationMessageFor(model => model.SubscriptionDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div style="display: flex">
+                <div class="spacer"></div>
+                <div class="form-group" style="flex:1;">
+                    @Html.LabelFor(model => model.Website, htmlAttributes: new { @class = "control-label", @style = "text-left" })
+                    @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "form-control", @id = "Website", @type = "url" } })
+                    @Html.ValidationMessageFor(model => model.Website, "", new { @class = "text-danger" })
+                </div>
+                <div class="spacer"></div>
+                <p id="error-handler" class="text-danger"></p>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Confirm" class="btn btn-primary confirm-button"/>
+            </div>
+        }
+    </div>
+</div>
+<div id="dialog_delete" class="dialog" title="Delete">
+    <div class="dialog-content">
+        @using (Html.BeginForm("Delete", "Customers", FormMethod.Post, new { @class = "form-horizontal", @id = "main_form_delete" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="CustomerId" id="CustomerIdDelete" value=""/>
+            <div class="form-group text-center">
+                <label class="text-warning">Are you sure you want to delete this customer?</label>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Confirm" class="btn btn-success confirm-button-delete"/>
+                <input type="button" value="Cancel" class="btn btn-danger" onclick="closeDialog('dialog_delete')"/>
+            </div>
+        }
+    </div>
+</div>
+<table id="table_list" class="table table-striped table-bordered" cellspacing="0" width="70%">
+    <thead>
+        <button class="btn btn-success create-button right">Create</button>
+        <tr>
+              <th>Customer Id</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Company</th>
+              <th>City</th>
+              <th>Country</th>
+              <th>Phone 1</th>
+              <th>Phone 2</th>
+              <th>Email</th>
+              <th>Subscription Date</th>
+              <th>Website</th>
+              <th></th>
+              <th></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Customer Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Company</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Phone 1</th>
+            <th>Phone 2</th>
+            <th>Email</th>
+            <th>Subscription Date</th>
+            <th>Website</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </tfoot>
+    <tbody>
+    @if (ViewBag.listTable != null)
+    {
+        foreach (var document in ViewBag.listTable)
+        {
+            var subscriptionDate = document.SubscriptionDate.ToString();
+            <tr>
+                <td>@document.CustomerId</td>
+                <td>@document.FirstName</td>
+                <td>@document.LastName</td>
+                <td>@document.Company</td>
+                <td>@document.City</td>
+                <td>@document.Country</td>
+                <td>@document.Phone1</td>
+                <td>@document.Phone2</td>
+                <td>@document.Email</td>
+                <td>@subscriptionDate</td>
+                <td>@document.Website</td>
+                <td><button class="btn btn-primary edit-button">Edit</button></td>
+                <td><button class="btn btn-danger delete-button">Delete</button></td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="6">Cannot find data!</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<script src="~/Scripts/customer-scripts.js"></script>
